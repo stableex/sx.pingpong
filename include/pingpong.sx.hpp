@@ -70,15 +70,16 @@ public:
 	 * ### params
 	 *
 	 * - `{uint64_t} [uid=null]` - (optional) unique identifier number used to lookup ping
+	 * - `{name} [type=null]` - type category (allows filtering by type)
 	 *
 	 * ### Example
 	 *
 	 * ```bash
-	 * $ cleos push action pingpong.sx ping '[123, "myping"]' -p myaccount
+	 * $ cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
 	 * ```
 	 */
 	[[eosio::action]]
-	void ping( optional<uint64_t> uid, optional<name> category );
+	void ping( optional<uint64_t> uid, optional<name> type );
 
 	/**
 	 * ## ACTION `pong`
@@ -101,9 +102,26 @@ public:
 	[[eosio::action]]
 	void pong( const name account, const uint64_t uid );
 
+	/**
+	 * ## ACTION `clear`
+	 *
+	 * Deletes pings that are older than 1 hour (maximum of 2 per clear action)
+	 *
+	 * - **authority**: `any`
+	 *
+	 * ### Example
+	 *
+	 * ```bash
+	 * $ cleos push action pingpong.sx clear '[]' -p myaccount
+	 * ```
+	 */
+	[[eosio::action]]
+	void clear();
+
 	// action wrappers
 	using ping_action = eosio::action_wrapper<"ping"_n, &pingpong::ping>;
 	using pong_action = eosio::action_wrapper<"pong"_n, &pingpong::pong>;
+	using clear_action = eosio::action_wrapper<"clear"_n, &pingpong::clear>;
 
 private:
 	uint64_t checksum256_to_uint64( const checksum256 hash );
