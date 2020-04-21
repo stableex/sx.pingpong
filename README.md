@@ -17,7 +17,7 @@
 
 ```bash
 # ping
-cleos push action pingpong.sx ping '[123]' -p myaccount
+cleos push action pingpong.sx ping '[123, "myping"]' -p myaccount
 
 # pong
 cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount

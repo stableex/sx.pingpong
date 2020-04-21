@@ -2,3 +2,8 @@
 *.wasm
 eosc-vault.json
 .vscode
+nodeos
+stderr
+node_modules
+package-lock.json
+yarn.lock
