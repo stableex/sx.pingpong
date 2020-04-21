@@ -75,8 +75,19 @@ Ping alerts users to replay with pong
 ### Example
 
 ```bash
-$ cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
+# ping
+cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
+
+# pong
+cleos push action pingpong.sx pong '["myaccount", 123]' -p myaccount
 ```
+
+### Examples JS
+
+- [get_pings](/examples/get_pings.js)
+- [get_pings_by_timestamp](/examples/get_pings_by_timestamp.js)
+- [get_pings_by_type](/examples/get_pings_by_type.js)
+- [push_transaction](/examples/push_transaction.js)
 
 ## ACTION `pong`
 
