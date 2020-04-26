@@ -27,11 +27,14 @@ cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
 
 | **network** | **contract**     |
 |-------------|--------------|
-| eos         | [`pingpong.sx`](https://bloks.io/account/pingpong.sx)
-| bos         | [`pingpong.sx`](https://bos.bloks.io/account/pingpong.sx)
-| jungle2     | [`eosnpingpong`](https://jungle.bloks.io/account/eosnpingpong)
-| jungle3     | [`eosnpingpong`](https://jungle3.bloks.io/account/eosnpingpong)
-| kylin       | [`eosnpingpong`](https://kylin.bloks.io/account/eosnpingpong)
+| EOS         | [`pingpong.sx`](https://bloks.io/account/pingpong.sx)
+| BOS         | [`pingpong.sx`](https://bos.bloks.io/account/pingpong.sx)
+| WAX         | [`pingpong.sx`](https://wax.bloks.io/account/pingpong.sx)
+| Gungle2     | [`eosnpingpong`](https://jungle.bloks.io/account/eosnpingpong)
+| Jungle3     | [`eosnpingpong`](https://jungle3.bloks.io/account/eosnpingpong)
+| Kylin       | [`eosnpingpong`](https://kylin.bloks.io/account/eosnpingpong)
+| WAX Test    | [`eosnpingpong`](https://wax-test.bloks.io/account/eosnpingpong)
+| BOS Test    | [`eosnpingpong`](https://bos-test.bloks.io/account/eosnpingpong)
 
 ## Build
 
