@@ -23,6 +23,16 @@ cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
 cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
 ```
 
+## Chains
+
+| **network** | **contract**     |
+|-------------|--------------|
+| eos         | [`pingpong.sx`](https://bloks.io/account/pingpong.sx)
+| bos         | [`pingpong.sx`](https://bos.bloks.io/account/pingpong.sx)
+| jungle2     | [`eosnpingpong`](https://jungle.bloks.io/account/eosnpingpong)
+| jungle3     | [`eosnpingpong`](https://jungle3.bloks.io/account/eosnpingpong)
+| kylin       | [`eosnpingpong`](https://kylin.bloks.io/account/eosnpingpong)
+
 ## Build
 
 ```bash
