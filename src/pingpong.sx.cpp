@@ -25,13 +25,17 @@ void pingpong::ping( optional<uint64_t> uid, optional<name> type )
 }
 
 [[eosio::action]]
-void pingpong::pong( const name account, const uint64_t uid )
+void pingpong::pong( const name account, const optional<uint64_t> uid, const optional<checksum256> trx_id )
 {
 	require_auth( account );
 
+	// provide either uid & transation id
+	check( uid || trx_id, "must provide `uid` or `trx_id`");
+	const uint64_t generated_uid = uid ? *uid : checksum256_to_uint64( *trx_id );
+
 	// add pong response to ping
 	pingpong::pings_table _pings( get_self(), get_self().value );
-    const auto ping_itr = _pings.find( uid );
+    const auto ping_itr = _pings.find( generated_uid );
 	check( ping_itr != _pings.end(), "uid does not exists");
 
 	_pings.modify( ping_itr, get_self(), [&]( auto& row ) {

@@ -20,7 +20,7 @@
 cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
 
 # pong
-cleos push action pingpong.sx pong '["myaccount", 123]' -p myaccount
+cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
 ```
 
 ## Build
@@ -36,7 +36,7 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 
 | `param`        | `index_position` | `key_type` |
 |----------------|------------------|------------|
-| `type` 		| 2                | i64        |
+| `type` 		 | 2                | i64        |
 | `timestamp`    | 3                | i64        |
 
 ### params
@@ -52,12 +52,12 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 
 ```json
 {
-"uid": 123,
-"type": "myping",
-"timestamp": "2020-04-21T17:12:51.500",
-"first": "myaccount",
-"pongs": [ { "key": "myaccount", "value": 1500 } ]	,
-"trx_id": "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"
+    "uid": 123,
+    "type": "myping",
+    "timestamp": "2020-04-21T17:12:51.500",
+    "first": "myaccount",
+    "pongs": [ { "key": "myaccount", "value": 1500 } ],
+    "trx_id": "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"
 }
 ```
 
@@ -98,12 +98,14 @@ Pong replies to ping
 ### params
 
 - `{name} account` - account replying to ping
-- `{uint64_t} uid` - unique identifier number of ping
+- `{uint64_t} [uid=null]` - unique identifier number of ping
+- `{uint64_t} [trx_id=null]` - transaction ID of ping
 
 ### Example
 
 ```bash
-$ cleos push action pingpong.sx pong '["myaccount", 123]' -p myaccount
+$ cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
+$ cleos push action pingpong.sx pong '["myaccount", null, "02154c4be85e915117b3170782a7d30c41ec9772b8518d5608089fbcbc86c491"]' -p myaccount
 ```
 
 ## ACTION `clear`

@@ -91,16 +91,18 @@ public:
 	 * ### params
 	 *
 	 * - `{name} account` - account replying to ping
-	 * - `{uint64_t} uid` - unique identifier number of ping
+	 * - `{uint64_t} [uid=null]` - unique identifier number of ping
+	 * - `{uint64_t} [trx_id=null]` - transaction ID of ping
 	 *
 	 * ### Example
 	 *
 	 * ```bash
-	 * $ cleos push action pingpong.sx pong '["myaccount", 123]' -p myaccount
+	 * $ cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
+	 * $ cleos push action pingpong.sx pong '["myaccount", null, "02154c4be85e915117b3170782a7d30c41ec9772b8518d5608089fbcbc86c491"]' -p myaccount
 	 * ```
 	 */
 	[[eosio::action]]
-	void pong( const name account, const uint64_t uid );
+	void pong( const name account, const optional<uint64_t> uid, const optional<checksum256> trx_id );
 
 	/**
 	 * ## ACTION `clear`
