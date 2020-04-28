@@ -63,7 +63,7 @@ public:
 	/**
 	 * ## ACTION `ping`
 	 *
-	 * Ping alerts users to replay with pong
+	 * Ping alerts users to reply with pong
 	 *
 	 * - **authority**: `any`
 	 *
