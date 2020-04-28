@@ -10,17 +10,17 @@
 ## Concept
 
 1. Any user calls `ping` action.
-2. Listening users respond with `pong` using the transaction ID and/or name of `ping`.
-3. Response times are recorded in `pings` table.
+2. Listening users respond with `pong` using the transaction ID.
+3. Response times are recorded in `pings` table in terms of block number.
 
 ## Quickstart
 
 ```bash
 # ping
-cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
+cleos push action pingpong.sx ping '["myping"]' -p myaccount
 
 # pong
-cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
+cleos push action pingpong.sx pong '["myaccount", "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"]' -p myaccount
 ```
 
 ## Chains
@@ -58,7 +58,7 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 - `{name} type` - type category (allows filtering by type)
 - `{time_point} timestamp` - timestamp when ping was executed
 - `{name} first` - first account to respond to ping
-- `{map<name, int64_t>} pongs` - accounts with their response time in milliseconds
+- `{map<name, int64_t>} pongs` - accounts with their response time in block numbers (500ms per block)
 - `{checksum256} trx_id` - transaction ID
 
 ### example
@@ -69,7 +69,7 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
     "type": "myping",
     "timestamp": "2020-04-21T17:12:51.500",
     "first": "myaccount",
-    "pongs": [ { "key": "myaccount", "value": 1500 } ],
+    "pongs": [ { "key": "myaccount", "value": 3 } ],
     "trx_id": "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"
 }
 ```
@@ -82,17 +82,12 @@ Ping alerts users to replay with pong
 
 ### params
 
-- `{uint64_t} [uid=null]` - (optional) unique identifier number used to lookup ping
-- `{name} type` - type category (allows filtering by type)
+- `{name} [name=null]` - (optional) name of ping (allows filtering by name)
 
 ### Example
 
 ```bash
-# ping
-cleos push action pingpong.sx ping '[123, "mytype"]' -p myaccount
-
-# pong
-cleos push action pingpong.sx pong '["myaccount", 123]' -p myaccount
+cleos push action pingpong.sx ping '["myping"]' -p myaccount
 ```
 
 ### Examples JS
@@ -111,14 +106,12 @@ Pong replies to ping
 ### params
 
 - `{name} account` - account replying to ping
-- `{uint64_t} [uid=null]` - unique identifier number of ping
-- `{uint64_t} [trx_id=null]` - transaction ID of ping
+- `{uint64_t} trx_id` - transaction ID of ping
 
 ### Example
 
 ```bash
-$ cleos push action pingpong.sx pong '["myaccount", 123, null]' -p myaccount
-$ cleos push action pingpong.sx pong '["myaccount", null, "02154c4be85e915117b3170782a7d30c41ec9772b8518d5608089fbcbc86c491"]' -p myaccount
+$ cleos push action pingpong.sx pong '["myaccount", "02154c4be85e915117b3170782a7d30c41ec9772b8518d5608089fbcbc86c491"]' -p myaccount
 ```
 
 ## ACTION `clear`

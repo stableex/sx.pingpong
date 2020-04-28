@@ -3,10 +3,10 @@
 #include "utils.cpp"
 
 [[eosio::action]]
-void pingpong::ping( optional<uint64_t> uid, optional<name> type )
+void pingpong::ping( optional<name> type )
 {
 	const checksum256 trx_id = get_tx_id();
-	const uint64_t generated_uid = uid ? *uid : checksum256_to_uint64( trx_id );
+	const uint64_t generated_uid = checksum256_to_uint64( trx_id );
 
 	// clear any old pings
 	clear();
@@ -16,7 +16,7 @@ void pingpong::ping( optional<uint64_t> uid, optional<name> type )
     const auto ping_itr = _pings.find( generated_uid );
 	check( ping_itr == _pings.end(), "uid already exists");
 
-	_pings.emplace( get_self(), [&]( auto& row ){
+	_pings.emplace( get_self(), [&]( auto& row ) {
 		row.uid = generated_uid;
 		row.type = *type;
 		row.trx_id = trx_id;
@@ -25,13 +25,12 @@ void pingpong::ping( optional<uint64_t> uid, optional<name> type )
 }
 
 [[eosio::action]]
-void pingpong::pong( const name account, const optional<uint64_t> uid, const optional<checksum256> trx_id )
+void pingpong::pong( const name account, const checksum256 trx_id )
 {
 	require_auth( account );
 
 	// provide either uid & transation id
-	check( uid || trx_id, "must provide `uid` or `trx_id`");
-	const uint64_t generated_uid = uid ? *uid : checksum256_to_uint64( *trx_id );
+	const uint64_t generated_uid = checksum256_to_uint64( trx_id );
 
 	// add pong response to ping
 	pingpong::pings_table _pings( get_self(), get_self().value );
@@ -45,7 +44,9 @@ void pingpong::pong( const name account, const optional<uint64_t> uid, const opt
 		// delta between start & now in milliseconds
 		const microseconds before = row.timestamp.time_since_epoch();
 		const microseconds now = current_time_point().time_since_epoch();
-		const int64_t delta = (now - before).count() / 1000;
+
+		// delta calculated in block numbers (1 block = 500ms)
+		const int64_t delta = (now - before).count() / 1000 / 500;
 		row.pongs[ account ] = delta;
 	});
 }
