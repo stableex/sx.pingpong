@@ -4,8 +4,15 @@
 
 ## Table of Content
 
-- [`concept`](#concept)
-- [`examples`](#examples)
+- [Concept](#concept)
+- [Quickstart](#quickstart)
+- [Examples](#examples)
+- [Chains](#chains)
+- [Build](#build)
+- [TABLE `pings`](#table-ping)
+- [ACTION `ping`](#action-ping)
+- [ACTION `pong`](#action-pong)
+- [ACTION `clear`](#action-clear)
 
 ## Concept
 
