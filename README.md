@@ -30,7 +30,7 @@ cleos push action pingpong.sx pong '["myaccount", "0311bad192115ef75abe1208330d2
 | EOS         | [`pingpong.sx`](https://bloks.io/account/pingpong.sx)
 | BOS         | [`pingpong.sx`](https://bos.bloks.io/account/pingpong.sx)
 | WAX         | [`pingpong.sx`](https://wax.bloks.io/account/pingpong.sx)
-| Gungle2     | [`eosnpingpong`](https://jungle.bloks.io/account/eosnpingpong)
+| Jungle2     | [`eosnpingpong`](https://jungle.bloks.io/account/eosnpingpong)
 | Jungle3     | [`eosnpingpong`](https://jungle3.bloks.io/account/eosnpingpong)
 | Kylin       | [`eosnpingpong`](https://kylin.bloks.io/account/eosnpingpong)
 | WAX Test    | [`eosnpingpong`](https://wax-test.bloks.io/account/eosnpingpong)
