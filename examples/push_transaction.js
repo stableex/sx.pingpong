@@ -23,8 +23,7 @@ const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), te
         name: 'ping',
         authorization,
         data: {
-            uid: 250,
-            type: "mytype"
+            name: "test"
         },
     }
     // pong action
@@ -34,7 +33,7 @@ const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), te
         authorization,
         data: {
             account: "myaccount",
-            uid: 250,
+            trx_id: null
         },
     }
     const options = {

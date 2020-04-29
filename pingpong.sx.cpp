@@ -60,11 +60,7 @@ checksum256 pingpong::get_latest_trx_id( const optional<checksum256> trx_id )
 
 	auto index = _pings.get_index<"bytimestamp"_n>();
 	auto itr = index.rbegin();
-
-	for ( const auto row : index ) {
-		return row.trx_id;
-	}
-	return *trx_id;
+	return itr->trx_id;
 }
 
 [[eosio::action]]
