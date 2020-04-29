@@ -23,6 +23,13 @@ cleos push action pingpong.sx ping '["myping"]' -p myaccount
 cleos push action pingpong.sx pong '["myaccount", "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"]' -p myaccount
 ```
 
+### Examples
+
+- [get_pings](/examples/get_pings.js)
+- [get_pings_by_timestamp](/examples/get_pings_by_timestamp.js)
+- [get_pings_by_type](/examples/get_pings_by_type.js)
+- [push_transaction](/examples/push_transaction.js)
+
 ## Chains
 
 | **network** | **contract**     |
@@ -39,7 +46,7 @@ cleos push action pingpong.sx pong '["myaccount", "0311bad192115ef75abe1208330d2
 ## Build
 
 ```bash
-$ eosio-cpp ./src/pingpong.sx.cpp -o pingpong.sx.wasm -I include
+$ eosio-cpp pingpong.sx.cpp -o pingpong.sx.wasm
 $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 ```
 
@@ -49,16 +56,16 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 
 | `param`        | `index_position` | `key_type` |
 |----------------|------------------|------------|
-| `type` 		 | 2                | i64        |
+| `name` 		 | 2                | i64        |
 | `timestamp`    | 3                | i64        |
 
 ### params
 
 - `{uint64_t} uid` - [primary key] unique identifier
-- `{name} type` - type category (allows filtering by type)
+- `{name} name` - ping name (allows easy to filter using secondary index)
 - `{time_point} timestamp` - timestamp when ping was executed
 - `{name} first` - first account to respond to ping
-- `{map<name, int64_t>} pongs` - accounts with their response time in block numbers (500ms per block)
+- `{map<name, int64_t>} pongs` - transactions with their response time in block numbers (500ms per block)
 - `{checksum256} trx_id` - transaction ID
 
 ### example
@@ -66,10 +73,10 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 ```json
 {
     "uid": 123,
-    "type": "myping",
+    "name": "myping",
     "timestamp": "2020-04-21T17:12:51.500",
     "first": "myaccount",
-    "pongs": [ { "key": "myaccount", "value": 3 } ],
+    "pongs": [ { "key": "f370a9bf27c659ee7c5ff9226dfe612420a261a91a14c15c244d067077fbea24", "value": 3 } ]	,
     "trx_id": "0311bad192115ef75abe1208330d2370a409a62a00fdb7140ef6fdf15931ef76"
 }
 ```
@@ -90,13 +97,6 @@ Ping alerts users to replay with pong
 cleos push action pingpong.sx ping '["myping"]' -p myaccount
 ```
 
-### Examples JS
-
-- [get_pings](/examples/get_pings.js)
-- [get_pings_by_timestamp](/examples/get_pings_by_timestamp.js)
-- [get_pings_by_type](/examples/get_pings_by_type.js)
-- [push_transaction](/examples/push_transaction.js)
-
 ## ACTION `pong`
 
 Pong replies to ping
@@ -106,12 +106,13 @@ Pong replies to ping
 ### params
 
 - `{name} account` - account replying to ping
-- `{uint64_t} trx_id` - transaction ID of ping
+- `{uint64_t} [trx_id=null]` - (optional) transaction ID of ping (default to latest ping)
 
 ### Example
 
 ```bash
 $ cleos push action pingpong.sx pong '["myaccount", "02154c4be85e915117b3170782a7d30c41ec9772b8518d5608089fbcbc86c491"]' -p myaccount
+$ cleos push action pingpong.sx pong '["myaccount", null]' -p myaccount
 ```
 
 ## ACTION `clear`
