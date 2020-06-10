@@ -1,4 +1,4 @@
-# SX `PingPong` ⚡️ - EOSIO Smart Contract
+# SX `PingPong` 🏓 - EOSIO Smart Contract
 
 > Response time speed contract
 
