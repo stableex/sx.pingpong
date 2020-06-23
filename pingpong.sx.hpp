@@ -27,6 +27,7 @@ public:
 	 *
 	 * - `{uint64_t} uid` - [primary key] unique identifier
 	 * - `{name} name` - ping name (allows easy to filter using secondary index)
+	 * - `{name} sender` - name of account that sent current inline action
 	 * - `{time_point} timestamp` - timestamp when ping was executed
 	 * - `{name} first` - first account to respond to ping
 	 * - `{map<name, int64_t>} pongs` - transactions with their response time in block numbers (500ms per block)
@@ -38,6 +39,7 @@ public:
 	 * {
 	 *   "uid": 123,
 	 *   "name": "myping",
+	 *   "sender": "mysender",
 	 *   "timestamp": "2020-04-21T17:12:51.500",
 	 *   "first": "myaccount",
 	 *   "pongs": [ { "key": "f370a9bf27c659ee7c5ff9226dfe612420a261a91a14c15c244d067077fbea24", "value": 3 } ]	,
@@ -48,6 +50,7 @@ public:
 	struct [[eosio::table("pings"), eosio::contract("pingpong.sx")]] pings_row {
 		uint64_t                	uid;
 		eosio::name                	name;
+		eosio::name                	sender;
 		time_point                	timestamp;
 		eosio::name                	first;
 		map<checksum256, int64_t>   pongs;
@@ -119,6 +122,9 @@ public:
 	 */
 	[[eosio::action]]
 	void clear();
+
+	[[eosio::on_notify("*::transfer")]]
+	void on_transfer( const name from, const name to, const asset quantity, const string memo );
 
 	// action wrappers
 	using ping_action = eosio::action_wrapper<"ping"_n, &pingpong::ping>;

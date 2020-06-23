@@ -1,5 +1,12 @@
 #include "pingpong.sx.hpp"
 
+[[eosio::on_notify("*::transfer")]]
+void pingpong::on_transfer( const name from, const name to, const asset quantity, const string memo )
+{
+    pingpong::ping_action ping( get_self(), { get_self(), "active"_n });
+    ping.send( from );
+}
+
 [[eosio::action]]
 void pingpong::ping( optional<name> name )
 {
@@ -17,6 +24,7 @@ void pingpong::ping( optional<name> name )
 	_pings.emplace( get_self(), [&]( auto& row ) {
 		row.uid = generated_uid;
 		row.name = *name;
+		row.sender = eosio::get_sender();
 		row.trx_id = trx_id;
 		row.timestamp = current_time_point();
 	});
@@ -72,8 +80,8 @@ void pingpong::clear()
 	// delete pings that are older than 1 hour (maximum of 2 per clear action)
 	set<uint64_t> to_delete;
 	for ( const auto row : index ) {
-		const uint32_t delta = current_time_point().sec_since_epoch() - row.timestamp.sec_since_epoch();
-		if ( delta < 3600 ) break;
+		// const uint32_t delta = current_time_point().sec_since_epoch() - row.timestamp.sec_since_epoch();
+		// if ( delta < 3600 ) break;
 		if ( to_delete.size() >= 2 ) break;
 		to_delete.insert( row.uid );
 	}

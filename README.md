@@ -70,6 +70,7 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 
 - `{uint64_t} uid` - [primary key] unique identifier
 - `{name} name` - ping name (allows easy to filter using secondary index)
+- `{name} sender` - name of account that sent current inline action
 - `{time_point} timestamp` - timestamp when ping was executed
 - `{name} first` - first account to respond to ping
 - `{map<name, int64_t>} pongs` - transactions with their response time in block numbers (500ms per block)
@@ -81,6 +82,7 @@ $ cleos set contract pingpong.sx . pingpong.sx.wasm pingpong.sx.abi
 {
     "uid": 123,
     "name": "myping",
+    "sender": "mysender",
     "timestamp": "2020-04-21T17:12:51.500",
     "first": "myaccount",
     "pongs": [ { "key": "f370a9bf27c659ee7c5ff9226dfe612420a261a91a14c15c244d067077fbea24", "value": 3 } ]	,
