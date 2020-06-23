@@ -1,6 +1,6 @@
-# SX `PingPong` ⚡️ - EOSIO Smart Contract
+# SX `PingPong` 🏓
 
-> Response time speed contract
+> Analytics for action response times
 
 ## Table of Content
 
