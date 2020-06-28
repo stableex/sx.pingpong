@@ -1,12 +1,5 @@
 #include "pingpong.sx.hpp"
 
-[[eosio::on_notify("*::transfer")]]
-void pingpong::on_transfer( const name from, const name to, const asset quantity, const string memo )
-{
-    pingpong::ping_action ping( get_self(), { get_self(), "active"_n });
-    ping.send( from );
-}
-
 [[eosio::action]]
 void pingpong::ping( optional<name> name )
 {
@@ -24,7 +17,6 @@ void pingpong::ping( optional<name> name )
 	_pings.emplace( get_self(), [&]( auto& row ) {
 		row.uid = generated_uid;
 		row.name = *name;
-		row.sender = eosio::get_sender();
 		row.trx_id = trx_id;
 		row.timestamp = current_time_point();
 	});
