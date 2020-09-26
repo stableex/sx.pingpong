@@ -120,9 +120,6 @@ public:
 	[[eosio::action]]
 	void clear();
 
-	[[eosio::on_notify("*::transfer")]]
-	void on_transfer( const name from, const name to, const asset quantity, const string memo );
-
 	// action wrappers
 	using ping_action = eosio::action_wrapper<"ping"_n, &pingpong::ping>;
 	using pong_action = eosio::action_wrapper<"pong"_n, &pingpong::pong>;
